@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keypad and Numpad</title>
+    <style>
+        .pad {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 200px;
+        }
+        .pad button {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            font-size: 20px;
+        }
+        .output {
+            margin: 20px 0;
+            font-size: 24px;
+        }
+        body.fullscreen {
+            background: url('knee.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+        body.fullscreen * {
+            display: none;
+        }
+        body.we-are-space {
+            background: black;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Numpad and Keypad</h1>
+
+    <div>
+        <h2>Numpad</h2>
+        <div class="pad" id="numpad"></div>
+        <div class="output" id="numpadOutput"></div>
+    </div>
+
+    <div>
+        <h2>Keypad</h2>
+        <input type="text" id="keypadInput" maxlength="20" placeholder="Type here...">
+        <div class="output" id="keypadOutput"></div>
+    </div>
+
+    <audio id="hl2Audio" loop>
+        <source src="hl2_song10_extend.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="stetsonAudio">
+        <source src="Colin_Stetson_-_The_Righteous_Wrath_Of_An_Honorable_Man_(mp3.pm).mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="laszloAudio">
+        <source src="hl2dawn.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        const numpad = document.getElementById('numpad');
+        const numpadOutput = document.getElementById('numpadOutput');
+        const keypadInput = document.getElementById('keypadInput');
+        const keypadOutput = document.getElementById('keypadOutput');
+        const hl2Audio = document.getElementById('hl2Audio');
+        const stetsonAudio = document.getElementById('stetsonAudio');
+        const laszloAudio = document.getElementById('laszloAudio');
+
+        let numpadCode = "";
+
+        const createNumpad = () => {
+            for (let i = 0; i < 10; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.addEventListener('click', () => handleNumpad(i));
+                numpad.appendChild(button);
+            }
+        };
+
+        const handleNumpad = (num) => {
+            numpadCode += num;
+            numpadOutput.textContent = numpadCode;
+            if (numpadCode === "582") {
+                window.location.href = "https://www.youtube.com/watch?v=OXnh5jfIPYg";
+            }
+        };
+
+        const handleKeypad = () => {
+            const keypadCode = keypadInput.value.toLowerCase();
+
+            if (keypadCode === "12345") {
+                keypadOutput.textContent = "Be more creative!";
+            } else if (keypadCode === "gordonfreeman") {
+                hl2Audio.play();
+            } else if (keypadCode === "kneesurme") {
+                stetsonAudio.play();
+                stetsonAudio.addEventListener('ended', () => {
+                    stetsonAudio.currentTime = 0;
+                }, { once: true });
+                document.body.classList.add('fullscreen');
+            } else if (keypadCode === "we_are_space") {
+                document.body.classList.add('we-are-space');
+                document.body.innerHTML = "<h1>WE ARE SPACE</h1>";
+            } else if (keypadCode === "laszlo") {
+                laszloAudio.play();
+            }
+        };
+
+        keypadInput.addEventListener('input', handleKeypad);
+        createNumpad();
+    </script>
+</body>
+</html>
